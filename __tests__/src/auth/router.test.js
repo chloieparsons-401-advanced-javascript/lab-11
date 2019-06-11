@@ -4,8 +4,8 @@ process.env.STORAGE = 'mongo';
 
 const jwt = require('jsonwebtoken');
 
-const server = require('../../../src/app.js').server;
-const supergoose = require('../../supergoose.js');
+const server = require('../../../src/app').server;
+const supergoose = require('../../supergoose');
 
 const mockRequest = supergoose.server(server);
 
@@ -40,7 +40,7 @@ describe('Auth Router', () => {
       });
 
       it('can signin with basic', () => {
-        return mockRequest.post('/signin')
+        return mockRequest.get('/signin')
           .auth(users[userType].username, users[userType].password)
           .then(results => {
             var token = jwt.verify(results.text, process.env.SECRET || 'changeit');
