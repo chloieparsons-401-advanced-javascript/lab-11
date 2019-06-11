@@ -21,13 +21,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// Catchalls
+app.use(notFound);
+app.use(errorHandler);
+
 app.use('/docs', express.static('docs'));
 app.use(authRouter);
 app.use(bookRouter);
 
-// Catchalls
-app.use(notFound);
-app.use(errorHandler);
+
 
 let isRunning = false;
 
