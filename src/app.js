@@ -6,9 +6,10 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 // Esoteric Resources
-const errorHandler = require( './middleware/error.js');
-const notFound = require( './middleware/404.js' );
-const authRouter = require( './auth/router.js' );
+const errorHandler = require( './middleware/error');
+const notFound = require( './middleware/404' );
+const authRouter = require( './auth/router' );
+const router = require('./routes/books');
 
 // Prepare the express app
 const app = express();
@@ -20,11 +21,20 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+app.use('/docs', express.static('docs'));
+app.use(authRouter);
+app.use(router);
+
 // Catchalls
 app.use(notFound);
 app.use(errorHandler);
 
 let isRunning = false;
+
+/**
+ * Export start to index
+ * @param {} port
+ */
 
 module.exports = {
   server: app,
