@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const errorHandler = require( './middleware/error');
 const notFound = require( './middleware/404' );
 const authRouter = require( './auth/router' );
-const bookRouter = require('./routes/books');
+const router = require('./routes/books');
 
 // Prepare the express app
 const app = express();
@@ -21,15 +21,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+app.use('/docs', express.static('docs'));
+app.use(authRouter);
+app.use(router);
+
 // Catchalls
 app.use(notFound);
 app.use(errorHandler);
-
-app.use('/docs', express.static('docs'));
-app.use(authRouter);
-app.use(bookRouter);
-
-
 
 let isRunning = false;
 

@@ -4,9 +4,6 @@ const express = require('express');
 const auth = require('../auth/middleware');
 const router = express.Router();
 
-router.get('/books', auth, handleGetAll);
-router.get('/books/:id', handleGetOne);
-
 // Route Handlers
 /**
  * @param {*} req 
@@ -26,11 +23,14 @@ function handleGetAll(req, res, next) {
   res.status(200).json(books);
 }
 
+router.get('/books', auth, handleGetAll);
+
 /**
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
  */
+
 
 function handleGetOne(req, res, next) {
   let book = {
@@ -38,5 +38,7 @@ function handleGetOne(req, res, next) {
   };
   res.status(200).json(book);
 }
+
+router.get('/books/:id', handleGetOne);
 
 module.exports = router;

@@ -40,7 +40,7 @@ describe('Auth Router', () => {
       });
 
       it('can signin with basic', () => {
-        return mockRequest.post('/signin')
+        return mockRequest.get('/signin')
           .auth(users[userType].username, users[userType].password)
           .then(results => {
             var token = jwt.verify(results.text, process.env.SECRET || 'changeit');
